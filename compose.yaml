@@ -1,0 +1,32 @@
+# Infraestrutura que ESTE serviço precisa — e só ela.
+#
+# Não há um docker-compose na raiz do projeto de propósito: as três aplicações
+# vivem em repositórios separados, e um arquivo fora de todos eles não seria
+# versionado por ninguém. Cada repositório declara a sua própria dependência.
+#
+# Você não precisa rodar "docker compose up": o Spring Boot encontra este
+# arquivo ao iniciar em desenvolvimento, sobe o container e ainda injeta host,
+# porta, usuário e senha na aplicação (ver spring-boot-docker-compose no pom).
+
+services:
+
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    ports:
+      - "5672:5672"     # AMQP, usado pela aplicação
+      - "15672:15672"   # painel web: http://localhost:15672 (guest/guest)
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      # O Boot espera este healthcheck ficar saudável antes de conectar.
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      # Nomeado para as filas e as mensagens sobreviverem a um restart.
+      - rabbitmq-dados:/var/lib/rabbitmq
+
+volumes:
+  rabbitmq-dados:
