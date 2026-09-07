@@ -78,8 +78,6 @@ Campos aceitos, todos opcionais: `escopo` (`ATIVOS` | `HISTORICO` | `TODOS`),
 
 Devolve `application/pdf`. Antes de concluir, responde `409`.
 
-Erros seguem RFC 7807 (`ProblemDetail`).
-
 ---
 
 ## Estrutura
@@ -111,5 +109,5 @@ infrastructure/  web · messaging · persistence · client · pdf · storage · 
 O serviço **não guarda os PDFs**. Não há diretório de arquivos, nem BLOB no
 banco, nem volume no container. O relatório existe no servidor apenas entre a
 geração e o download, em memória, e é descartado no instante em que o cliente
-o retira — o destino do arquivo é a máquina de quem pediu, e só.
+o retira, o destino do arquivo é a máquina de quem pediu, e só.
 
