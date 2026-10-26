@@ -20,7 +20,7 @@ jobs:
 
       - name: Build e Push da imagem
         run: |
-          docker build -t brucilao/horticontrol-microservice:latest.
+          docker build -t brucilao/horticontrol-microservice:latest .
           docker push brucilao/horticontrol-microservice:latest
 
       - name: Deploy via Bastion
@@ -30,4 +30,4 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            ssh -o StrictHostKeyChecking=no -i /home/ubuntu/chave.pem ubuntu@10.0.0.211 "cd ~/backend && docker compose pull && docker compose up -d"
+            ssh -o StrictHostKeyChecking=no -i /home/ubuntu/HortiControl2.0.pem ubuntu@10.0.0.211 "cd ~/backend && docker compose pull && docker compose up -d"
