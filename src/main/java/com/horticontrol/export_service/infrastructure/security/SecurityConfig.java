@@ -19,12 +19,15 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
+
+
     private final FiltroDeAutenticacaoJwt filtroJwt;
     private final PropriedadesDeSeguranca propriedades;
 
     public SecurityConfig(
             FiltroDeAutenticacaoJwt filtroJwt,
             PropriedadesDeSeguranca propriedades) {
+
 
         this.filtroJwt = filtroJwt;
         this.propriedades = propriedades;
@@ -41,7 +44,10 @@ public class SecurityConfig {
                  * automaticamente — exatamente a condição que torna CSRF
                  * possível. Por isso a proteção fica ativa.
                  */
-                .csrf(csrf -> csrf.csrfTokenRepository(repositorioCsrf()))
+                .csrf(csrf -> csrf
+                        .csrfTokenRepository(repositorioCsrf())
+                        .ignoringRequestMatchers("/exportacoes/**")
+                )
 
                 .requestCache(cache -> cache.disable())
                 .formLogin(form -> form.disable())
