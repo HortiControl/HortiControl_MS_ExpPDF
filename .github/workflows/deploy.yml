@@ -26,7 +26,7 @@ jobs:
       - name: Deploy via Bastion
         uses: appleboy/ssh-action@v1
         with:
-          host: 100.54.117.31
+          host: 3.215.146.171
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
